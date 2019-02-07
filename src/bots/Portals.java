@@ -3,6 +3,9 @@ package bots;
 import elf_kingdom.Game;
 import elf_kingdom.Portal;
 
+/**
+ * class that controls the portals
+ */
 class Portals {
     /**
      * Gives orders to my portals.
@@ -10,16 +13,13 @@ class Portals {
      * @param game - the current game state
      */
     static void handlePortals(Game game) {
-        // Go over all of my portals.
-        for (Portal portal : game.getMyPortals()) {
-            // If the portal can summon a lava giant - do that.
-            if (portal.canSummonLavaGiant()) {
-                // Summon the lava giant.
-                portal.summonLavaGiant();
-                // Print a message.
-                System.out.println("portal " + portal + " summons a lava giant");
-            }
+        int numOfPortals = game.getMyPortals().length;
+        if (numOfPortals == 0) {
+            Elves.buildPortal(game);
+        }
+        Portal portal = game.getMyPortals()[numOfPortals - 1];
+        if (portal.canSummonLavaGiant() && MyBot.turns % 3 == 0) {
+            portal.summonLavaGiant();
         }
     }
-
 }
